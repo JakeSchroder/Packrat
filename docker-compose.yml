@@ -43,11 +43,13 @@ services:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      - mongodb
+      - mongo
     networks:
       - app-tier
     command:
       tail -f /dev/null
+    volumes:
+      - .:/usr/src/app # Makes requests work for some reason
 
 networks:
   app-tier:
