@@ -1,8 +1,8 @@
-import Homepage from "./home";
+import HomePage from "./home/HomePage";
 
 function App() {
   return (
-    <Homepage splashText="whateverman" thisToo={3}></Homepage>
+    <HomePage splashText="whateverman" thisToo={3}></HomePage>
   );
 }
 

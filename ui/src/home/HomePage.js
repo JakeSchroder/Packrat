@@ -1,8 +1,6 @@
-import logo from '../logo.svg';
-// import '../App.css';
-import Navbar from '../components/navbar';
+import PageHeader from '../containers/PageHeader';
 
-const Homepage = ({splashText}) => {
+const HomePage = ({splashText}) => {
     // navbar
         // search bar
         // cart/account
@@ -11,10 +9,10 @@ const Homepage = ({splashText}) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Navbar></Navbar>
+        <PageHeader/>
       </header>
     </div>
   );
 }
 
-export default Homepage;
+export default HomePage;
