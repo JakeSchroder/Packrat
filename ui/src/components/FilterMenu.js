@@ -8,9 +8,8 @@ export default function AccessibleTabs2() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const tabNames = ['Top', 'Bottom', 'Jewlery', 'Hat', 'Misc.'];
+  const tabNames = ['All', 'Top', 'Bottom', 'Jewlery', 'Hat', 'Misc.'];
   return (
-    <Box sx={{ width: '100%' }}>
       <Tabs
         onChange={handleChange}
         value={value}
@@ -20,6 +19,5 @@ export default function AccessibleTabs2() {
             tabNames.map((name, index) => (<Tab key={index} label={name} />))
         }
       </Tabs>
-    </Box>
   );
 }
