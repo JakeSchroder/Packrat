@@ -1,7 +1,6 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import {Button, IconButton} from '@mui/material';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import IconButton from '@mui/material/IconButton';
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
