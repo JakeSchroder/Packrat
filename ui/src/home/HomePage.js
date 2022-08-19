@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import PageFooter from '../containers/PageFooter';
-import PageHeader from '../containers/PageHeader';
-import ProductGrid from '../containers/ProductGrid';
+import PageFooterContainer from '../containers/PageFooter';
+import PageHeaderContainer from '../containers/PageHeader';
+import ProductGridContainer from '../containers/ProductGrid';
 
 const productA = {
   name: "Save the Planet Triple-Layer Beaded Necklace",
@@ -35,9 +35,9 @@ const HomePage = ({splashText}) => {
   return (
     <div className="App">
       <header className="App-header">
-        <PageHeader setFilterState={setFilterState}/>
-        <ProductGrid filterState={filterState} products={products}/>
-        <PageFooter/>
+        <PageHeaderContainer setFilterState={setFilterState}/>
+        <ProductGridContainer filterState={filterState} products={products}/>
+        <PageFooterContainer/>
       </header>
     </div>
   );

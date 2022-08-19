@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
 import Grid from '@mui/material/Unstable_Grid2';
-import Pagination from "../components/Pagination";
+import PageTrackerComponent from "../components/PageTracker";
 
 export default function PageFooter(){
     return(
         <Box>
             <Grid container justifyContent="center"> 
-                <Pagination/>
+                <PageTrackerComponent/>
             </Grid>
         </Box>
     );
