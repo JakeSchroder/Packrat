@@ -6,7 +6,8 @@ import FilterMenu from "../components/FilterMenu";
 import SearchBar from "../components/SearchBar";
 import { Stack } from '@mui/system';
 
-export default function PageHeader(){
+export default function PageHeader({setFilterState}){
+    console.log(setFilterState)
   return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={1} columns={10}>
@@ -20,7 +21,7 @@ export default function PageHeader(){
                     </Stack>
                 </Grid>
                 <Grid xs md={6} mdOffset={3}>
-                    <FilterMenu/>
+                    <FilterMenu setFilterState={setFilterState}/>
                 </Grid>
             </Grid>
         </Box> 
