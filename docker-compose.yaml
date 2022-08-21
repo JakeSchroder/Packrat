@@ -33,7 +33,7 @@ services:
     - db
 
   db:
-    image: mongo
+    image: mongo:latest
     ports:
       - 27017:27017
     container_name: mongo-db
@@ -48,4 +48,3 @@ networks:
 
 volumes:
   mongo-data:
-    driver: local
