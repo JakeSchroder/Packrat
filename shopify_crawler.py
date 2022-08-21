@@ -8,14 +8,15 @@ def get_url(url, page):
     return products_json
 
 def main():
-    url = 'https://www.wearebraindead.com'
+    urls = ['https://shoptunnelvision.com/', 'https://www.wearebraindead.com', 'https://shop-cometees.biz/', 'https://basketcase.gallery/']
+    url = urls[3]
     page = 0
     print("Connecting to database...")
-    client = MongoClient('mongodb://root:password@mongo:27017/')
+    client = MongoClient('localhost', 27017)
     db = client.everything_everywhere
     response = None
 
-    print("Retrieving products...")
+    print("Retrieving products from" + url + "...")
     while True:
         try:
             response = get_url(url, page)
@@ -27,10 +28,11 @@ def main():
         else: # Store product data
             try:
                 db.products.insert_many(response["products"])
+                print("Page " + str(page) + " stored!")
             except Exception as e:
                 print(e)
         page+=1
-        sleep(240)
+        sleep(60)
                 
     client.close()
     print("Success!")

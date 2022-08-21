@@ -14,7 +14,7 @@ const productB = {
   price: "$85.00",
   img: "https://cdn.shopify.com/s/files/1/0071/9454/2138/products/DARKPASSAGESWHITEFRONTMODEL_750x.jpg?v=1660497384",
   type: "top"
-}
+};
 const generateProducts = (count=2) => {
   let products = [
     productA, productB
