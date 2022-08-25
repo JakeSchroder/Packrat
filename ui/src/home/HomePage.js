@@ -27,8 +27,22 @@ const generateProducts = (count=2) => {
 
 const HomePage = ({splashText}) => {
   const [filterState, setFilterState] = useState('All');
+  const [isLoading, setIsLoading] = useState(true)
   // Make API call for products here
   
+  useEffect(() => {
+    // fetch request for products
+    fetch('http://localhost:3080/products')
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+
+    // After successful fetch set isLoading to false
+    setIsLoading(false);
+  })
+  
+  if (isLoading) {
+    return (<>Loading</>);
+  }
   let products = generateProducts(10);
   // Declare the filter state here
   // And then whenever the filter changes it should propagate through to the grid
