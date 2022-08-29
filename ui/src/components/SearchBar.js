@@ -1,12 +1,18 @@
-
-import * as React from 'react';
-import {Box, Input, InputLabel, InputAdornment, FormControl, TextField} from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import SearchIcon from '@mui/icons-material/Search';
+import * as React from "react";
+import {
+  Box,
+  Input,
+  InputLabel,
+  InputAdornment,
+  FormControl,
+  TextField,
+} from "@mui/material";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function InputWithIcon() {
   return (
-    <Box sx={{ '& > :not(style)': { m: 1 } }}>
+    <Box sx={{ "& > :not(style)": { m: 1 } }}>
       <TextField
         id="input-with-icon-textfield"
         label="Search"

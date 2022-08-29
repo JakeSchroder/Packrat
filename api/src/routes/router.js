@@ -20,7 +20,7 @@ const Product = mongoose.model('Product', productSchema, "products");
 
 router.get('/products', async (req, res) => {// Retrieves products according to the applied filter
     let products = {count: 0, products: []};
-    const result = await Product.find({product_type:filter}, 'title variants images vendor').exec();
+    const result = await Product.find({}, 'title variants images vendor').exec();
     console.log(result)
     res.send(result);
 });

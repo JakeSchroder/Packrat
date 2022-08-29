@@ -1,60 +1,53 @@
-import React, { useState, useEffect } from 'react'
-import PageFooterContainer from '../containers/PageFooter';
-import PageHeaderContainer from '../containers/PageHeader';
-import ProductGridContainer from '../containers/ProductGrid';
+import React, { useState, useEffect } from "react";
+import PageFooterContainer from "../containers/PageFooter";
+import PageHeaderContainer from "../containers/PageHeader";
+import ProductGridContainer from "../containers/ProductGrid";
 
-const productA = {
-  name: "Save the Planet Triple-Layer Beaded Necklace",
-  price: "$22.00",
-  img: "https://cdn.shopify.com/s/files/1/0105/8592/products/IMG_2028_df3c1bc1-b0aa-404a-9e12-26a4914a112c_1080x.jpg?v=1623115410",
-  type: "jewelery"
-};
-const productB = {
-  name: "DARK PASSAGES RAVER TEE WHITE",
-  price: "$85.00",
-  img: "https://cdn.shopify.com/s/files/1/0071/9454/2138/products/DARKPASSAGESWHITEFRONTMODEL_750x.jpg?v=1660497384",
-  type: "top"
-};
-const generateProducts = (count=2) => {
-  let products = [
-    productA, productB
-  ];
-  for (let index = 0; index < count; index+=2) {
-    products = [...products, productA, productB]
-  }
-  return products
-};
+const HomePage = ({ splashText }) => {
+  const [filterState, setFilterState] = useState("All");
+  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState([]);
 
-const HomePage = ({splashText}) => {
-  const [filterState, setFilterState] = useState('All');
-  const [isLoading, setIsLoading] = useState(true)
+  const shuffle = (products) => {
+    // Based off Fisher-Yates
+    let num_products = products.length;
+    for (let index = num_products - 1; index > 0; index--) {
+      let rand_index = Math.floor(Math.random() * num_products);
+      let tmp = products[index];
+      products[index] = products[rand_index];
+      products[rand_index] = tmp;
+    }
+  };
+
   // Make API call for products here
-  
   useEffect(() => {
-    // fetch request for products
-    fetch('http://localhost:3080/products')
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-
+    if (isLoading) {
+      // fetch request for products
+      fetch("http://localhost:3080/products")
+        .then((response) => response.json())
+        .then((data) => setProducts(data));
+    }
     // After successful fetch set isLoading to false
     setIsLoading(false);
-  })
-  
+  });
+
   if (isLoading) {
-    return (<>Loading</>);
+    return <>Loading...</>;
+  } else {
+    shuffle(products);
   }
-  let products = generateProducts(10);
+
   // Declare the filter state here
   // And then whenever the filter changes it should propagate through to the grid
   return (
     <div className="App">
       <header className="App-header">
-        <PageHeaderContainer setFilterState={setFilterState}/>
-        <ProductGridContainer filterState={filterState} products={products}/>
-        <PageFooterContainer/>
+        <PageHeaderContainer setFilterState={setFilterState} />
+        <ProductGridContainer filterState={filterState} products={products} />
+        <PageFooterContainer />
       </header>
     </div>
   );
-}
+};
 
 export default HomePage;
