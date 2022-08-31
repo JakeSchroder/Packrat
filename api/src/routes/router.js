@@ -14,13 +14,13 @@ const productSchema = new mongoose.Schema({
     variants: Array,
     images: Array,
     product_type: String,
+    tags: Array
 });
 
 const Product = mongoose.model('Product', productSchema, "products");
 
 router.get('/products', async (req, res) => {// Retrieves products according to the applied filter
-    let products = {count: 0, products: []};
-    const result = await Product.find({}, 'title variants images vendor').exec();
+    const result = await Product.find({'variants.available':true, 'tags':{$nin:["kid", "Kids"]},'title':{$not:{$regex:"Kids"}} }, 'title variants images vendor tags').exec();
     console.log(result)
     res.send(result);
 });
