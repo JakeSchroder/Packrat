@@ -1,6 +1,6 @@
-import * as React from 'react';
-import {Button, IconButton} from '@mui/material';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import * as React from "react";
+import { Button, IconButton } from "@mui/material";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -16,14 +16,13 @@ export default function BasicMenu() {
     <div>
       <IconButton
         id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
+        aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
+        aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <ShoppingBagIcon/>
+        <ShoppingBagIcon />
       </IconButton>
-
     </div>
   );
 }

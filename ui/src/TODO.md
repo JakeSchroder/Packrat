@@ -1,5 +1,5 @@
 - [ ] Create home page
-    - Nav bar
-    - Search bar: https://mui.com/material-ui/api/text-field/
-    - Cart/Account
-    - Grid list of products
+  - Nav bar
+  - Search bar: https://mui.com/material-ui/api/text-field/
+  - Cart/Account
+  - Grid list of products
