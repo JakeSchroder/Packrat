@@ -8,8 +8,7 @@ import ItemComponent from "../components/Item";
 //* Make map function to add all products *//
 
 export default function BasicGrid({ filterState, products }) {
-  //const filteredProducts = products.filter(p => p.type.toLowerCase() === filterState.toLowerCase() || filterState.toLowerCase() === 'all')
-  console.log(products.length, products);
+  products = products.splice(0, 100);//SUPER TEMPORARY
   return (
     <Grid
       justifyContent="space-around"
@@ -17,7 +16,7 @@ export default function BasicGrid({ filterState, products }) {
       container
       columnSpacing={{ xs: 1, sm: 2, md: 3 }}
     >
-      {products.map((product) => ItemComponent({ ...product }))}
+      {products.map((product, index) => ItemComponent({ ...product }, index))}
     </Grid>
   );
 }

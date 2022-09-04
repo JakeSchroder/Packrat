@@ -23,7 +23,8 @@ const HomePage = ({ splashText }) => {
   useEffect(() => {
     if (isLoading) {
       // fetch request for products
-      fetch("http://localhost:3080/products")
+      console.log(filterState);
+      fetch(`http://localhost:3080/products/${filterState}`)
         .then((response) => response.json())
         .then((data) => setProducts(data));
     }
@@ -42,7 +43,7 @@ const HomePage = ({ splashText }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <PageHeaderContainer setFilterState={setFilterState} />
+        <PageHeaderContainer setFilterState={setFilterState} setIsLoading={setIsLoading} />
         <ProductGridContainer filterState={filterState} products={products} />
         <PageFooterContainer />
       </header>

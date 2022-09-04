@@ -2,12 +2,13 @@ import * as React from "react";
 import { Tab, Tabs, Box } from "@mui/material";
 import ProductTypes from "../constants/ProductTypes";
 
-export default function FilterMenu({ setFilterState }) {
+export default function FilterMenu({ setFilterState, setIsLoading}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setFilterState(tabNames[newValue]); // Should change because this is a no-no
+    setIsLoading(true);// Breaks how the tab filter selects
   };
   const tabNames = ProductTypes;
   return (
@@ -17,7 +18,7 @@ export default function FilterMenu({ setFilterState }) {
       aria-label="Tabs where each tab needs to be selected manually"
     >
       {tabNames.map((name, index) => (
-        <Tab key={index} label={name} />
+        <Tab key={index} label={name.replace('_', ' ')} />
       ))}
     </Tabs>
   );
