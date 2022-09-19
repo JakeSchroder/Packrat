@@ -8,13 +8,13 @@ import ItemComponent from "../components/Item";
 //* Make map function to add all products *//
 
 export default function BasicGrid({ filterState, products }) {
-  products = products.splice(0, 100);//SUPER TEMPORARY
   return (
     <Grid
       justifyContent="space-around"
       rowSpacing={1}
       container
       columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+      rowBuffer={200}
     >
       {products.map((product, index) => ItemComponent({ ...product }, index))}
     </Grid>

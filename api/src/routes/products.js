@@ -15,28 +15,17 @@ const productSchema = new mongoose.Schema({
 const basePath = '/products';
 const Product = mongoose.model('Product', productSchema, "products");
 
-router.get(`${basePath}/All`, async (req, res) => {// Retrieves All products
-    const result = await Product.find({
-        product_type: ALL, 
-        'variants.available':true, 
-        'tags':{$nin:["kid", "Kids"]},
-        'title':{$not:{$regex:"Kids"}} }, 
-        'title variants images vendor tags product_type'
-    ).exec();
-    console.log(result)
-    res.send(result);
-});
-
 Object.keys(ProductTypes).forEach((ProductType) => {
-    router.get(`${basePath}/${ProductType.toLowerCase()}`, async (req, res) => {// Retrieves Top products
+    router.get(`${basePath}/${ProductType.toLowerCase()}`, async (request, response) => {// Retrieves Top products
+        const { pageIndex, pageSize } = request.query;
+        // TODO: validate query params before injecting them into query to prevent SQL injection
         const result = await Product.find({
             product_type: ProductTypes[ProductType], 
             'variants.available':true,
             'tags':{$nin:["kid", "Kids"]},
             'title':{$not:{$regex:"Kids"}}
-        }, 'title variants images vendor tags product_type').exec();
-        console.log(result)
-        res.send(result);
+        }, 'title variants images vendor tags product_type').skip(pageIndex*pageSize).limit(pageSize).exec();
+        response.send(result);
     });
 })
 
