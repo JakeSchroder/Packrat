@@ -48,10 +48,17 @@ def update_products(db, page, products):
 
 
 def main():
-    urls = ['https://shoptunnelvision.com', 'https://www.wearebraindead.com',
-            'https://shop-cometees.biz', 'https://basketcase.gallery']
-    url = urls[2]
-    page = 3
+    urls = ['https://shoptunnelvision.com', 'https://www.wearebraindead.com', # 0, 1
+            'https://shop-cometees.biz', 'https://basketcase.gallery', 'https://shirtz.cool', # 2, 3, 4
+            'https://generaladmission.com', 'https://honorthegift.co', 'https://forthosewhosin.com', # 5, 6, 7
+            'https://www.bbcicecream.com', 'https://camphigh.com', 'https://unfortunateportrait.com', # 8, 9, 10
+            'https://www.junglesjungles.com', 'https://funeralapparel.com', 'https://awakenyclothing.com', # 11, 12, 13
+            'https://pleasuresnow.com', 'https://tombolocompany.com', 'https://www.storymfg.com', # 14, 15, 16
+            'https://chnge.com', 'https://bdgastore.com', 'https://nepenthesny.com', # 17, 18, 19
+            'https://humblesbrand.com', 'https://cherryla.com', 'https://faworldentertainment.com', # 20, 21, 22
+            'https://kidsuper.com', 'https://www.thevintagetwin.com'] # 23, 24
+    url = urls[8]
+    page = 0
     db, client = get_db()
 
     products_on_page = get_products_by_page(url, page)
@@ -59,7 +66,7 @@ def main():
         # Store product data
         update_products(db, page, products_on_page)
         page += 1
-        sleep(60)  # Prevents blocking from shopify
+        sleep(15)  # Prevents blocking from shopify
         products_on_page = get_products_by_page(url, page)
 
     client.close()

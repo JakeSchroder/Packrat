@@ -6,7 +6,6 @@ export default function PageFooter() {
   return (
     <Box>
       <Grid container justifyContent="center">
-        <PageTrackerComponent />
       </Grid>
     </Box>
   );
