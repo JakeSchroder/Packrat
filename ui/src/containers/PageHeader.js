@@ -6,7 +6,7 @@ import FilterTabsComponent from "../components/FilterTabs";
 import SearchBarComponent from "../components/SearchBar";
 import { Stack } from "@mui/system";
 
-export default function PageHeader({ setFilterState, setIsLoading}) {
+export default function PageHeader({ setFilterState }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={1} columns={10}>
@@ -20,7 +20,7 @@ export default function PageHeader({ setFilterState, setIsLoading}) {
           </Stack>
         </Grid>
         <Grid xs md={6} mdOffset={3}>
-          <FilterTabsComponent setFilterState={setFilterState} setIsLoading={setIsLoading}/>
+          <FilterTabsComponent setFilterState={setFilterState} />
         </Grid>
       </Grid>
     </Box>
