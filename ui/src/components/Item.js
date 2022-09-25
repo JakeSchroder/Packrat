@@ -18,13 +18,18 @@ export default function MultiActionAreaCard({
   tags,
   product_type
 }, index) {
+
+  let product_image = ""
+  if(images.length === [] || images[0] === undefined){product_image = "none"}
+  else{product_image = images[0]["src"]}
+  
+
   return (
-    //* Replace key with key in shopify DB *//
     // You can parameterize the "xs" to have a variable size
     <Grid key={index} item xs={2}>
       <Card sx={{ maxWidth: 250 }} style={{ boxShadow: "none" }}>
         <CardActionArea>
-          <CardMedia component="img" image={images[0]["src"]}/>
+          <CardMedia component="img" image={product_image} alt="Uh-oh" />
         </CardActionArea>
         <CardContent>
           <Typography
