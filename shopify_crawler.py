@@ -72,7 +72,7 @@ def main():
             'https://kidsuper.com', 'https://www.thevintagetwin.com', 'https://wishmeluckbrand.com'] # 23, 24, 25
     db, client = get_db()
 
-    for url in urls[]:
+    for url in urls:
         print(f"\nWorking on {url}\n")
         store_products(url, db)
         print(f"\nFinished {url}\n")
