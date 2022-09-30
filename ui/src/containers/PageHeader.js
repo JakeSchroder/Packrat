@@ -6,21 +6,22 @@ import FilterTabsComponent from "../components/FilterTabs";
 import SearchBarComponent from "../components/SearchBar";
 import { Stack } from "@mui/system";
 
-export default function PageHeader({ setFilterState }) {
+export default function PageHeader({ setPageIndex, setProductData, setFilterState, pageFilters}) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={1} columns={10}>
-        <Grid xs={2}>
-          <SearchBarComponent />
+        <Grid xs={2} >
+          <Stack direction="row" spacing={1}>
+            <FilterTabsComponent setPageIndex={setPageIndex} setProductData={setProductData} setFilterState={setFilterState} title={'Type'} optionFilter={pageFilters['type']} />
+            <FilterTabsComponent setPageIndex={setPageIndex} setProductData={setProductData} setFilterState={setFilterState} title={'Vendor'} optionFilter={pageFilters['vendor']} />
+            <FilterTabsComponent setPageIndex={setPageIndex} setProductData={setProductData} setFilterState={setFilterState} title={'Sort'} optionFilter={pageFilters['sort']} />
+          </Stack>
         </Grid>
         <Grid xs={1} md={1} mdOffset="auto">
           <Stack direction="row" spacing={1}>
             <AccountMenuComponent />
             <CartComponent />
           </Stack>
-        </Grid>
-        <Grid xs md={6} mdOffset={3}>
-          <FilterTabsComponent setFilterState={setFilterState} />
         </Grid>
       </Grid>
     </Box>

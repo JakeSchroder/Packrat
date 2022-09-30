@@ -11,3 +11,5 @@ COMMANDS:
         docker ps
     Stop services -
         docker-compose stop
+    Backup DB -
+        mongodump --host=localhost --port=27017 --out=~/Development/EverythingEverywhere/backup/mongodump-2022-09-28
