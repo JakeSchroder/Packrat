@@ -7,11 +7,12 @@ import ItemComponent from "../components/Item";
 export default function BasicGrid({ productData }) {
   return (
     <Grid
-      justifyContent="space-around"
+      columns={4}
       rowSpacing={1}
       container
-      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      rowBuffer={200}
+      alignItems="baseline"
+      padding="5%"
+      paddingBottom={0}
     >
       {productData.map((product, index) => ItemComponent({ ...product }, index))}
     </Grid>
