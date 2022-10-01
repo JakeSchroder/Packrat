@@ -12,10 +12,10 @@ import Grid from "@mui/material/Unstable_Grid2";
 
 export default function MultiActionAreaCard({
   title,
+  handle,
   variants,
   images,
   vendor,
-  tags,
   product_type
 }, index) {
 

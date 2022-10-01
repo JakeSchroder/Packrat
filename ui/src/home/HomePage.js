@@ -22,7 +22,6 @@ const HomePage = () => {
     setIsFetching(true);
     try{
       // fetch request for products
-      console.log(sortFilterState.replaceAll(' ', '_'));
       const response = await fetch(`http://localhost:3080/products/${typeFilterState.replaceAll(' ', '_')}?sortOrder=${sortFilterState.replaceAll(' ', '_')}&pageIndex=${pageIndex}&pageSize=${pageSize}`);
       const data = await response.json();
       if(data.length === 0){
@@ -66,7 +65,7 @@ const HomePage = () => {
   if (loaded) {
     return (
       <div className="App">
-        <AppBar className="App-header" position="fixed" color="inherit">
+        <AppBar className="App-header" position="fixed" color="transparent" elevation={0} >
           <PageHeaderContainer setPageIndex={setPageIndex} setProductData={setProductData} 
             setTypeFilterState={setTypeFilterState} setSortFilterState={setSortFilterState} pageFilters={pageFilters}/>          
         </AppBar>
@@ -76,7 +75,7 @@ const HomePage = () => {
               loadMore={fetchProductData}
               hasMore={hasMore}
               threshold={250}
-              loader={<div className="loader" align="center" key={0}><CircularProgress color="secondary" variant="query" /></div>}
+              loader={<div className="loader" align="center" key={0}><CircularProgress color="secondary" /></div>}
           >
             <ProductGridContainer productData={productData} />
           </InfiniteScroll>
@@ -91,7 +90,7 @@ const HomePage = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <CircularProgress color="secondary" variant="query" />
+        <CircularProgress className="loader" align="center" color="secondary" />
       </header>
     </div>
   );
