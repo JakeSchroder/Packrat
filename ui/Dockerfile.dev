@@ -1,5 +1,5 @@
 # Pull the Node image from Docker Hub
-FROM node:14-slim
+FROM node:16
 
 # Setting Working Directory
 WORKDIR /usr/app
@@ -12,6 +12,11 @@ RUN npm install
 
 # Copy rest of the code to container
 COPY . .
+
+# Pass down port from env
+ARG PORT
+ENV REACT_APP_PORT=${PORT}
+
 
 EXPOSE 3000
 

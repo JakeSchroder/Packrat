@@ -5,7 +5,7 @@ services:
       context: ./ui
       dockerfile: Dockerfile.dev
     env_file:
-      - .env.dev
+      - .env.prod
     environment:
       - PORT
     ports:
@@ -13,9 +13,6 @@ services:
     container_name: mern-ui
     networks:
       -  mern-stack-net
-    volumes:
-      -  ./ui/src:/usr/app/src
-      -  ./ui/public:/usr/app/public
     depends_on:
       - api
     stdin_open: true
@@ -26,30 +23,13 @@ services:
       context: ./api
       dockerfile: Dockerfile.dev
     env_file:
-      - .env.dev
+      - .env.prod
     ports:
-      - 3080:3080
+      - 80:80
     container_name: mern-api
     networks:
       - mern-stack-net
-    volumes:
-      - ./api/src:/usr/app/src
-    depends_on:
-      - db
-
-  db:
-    image: mongo:latest
-    ports:
-      - 27017:27017
-    container_name: mongo-db
-    networks:
-      - mern-stack-net
-    volumes:
-      - mongo-data:/data/db
 
 networks:
   mern-stack-net:
     driver: bridge
-
-volumes:
-  mongo-data:
