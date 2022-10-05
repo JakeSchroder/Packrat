@@ -2,11 +2,12 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node index.js",
-        "start:nodemon": "nodemon ./index.js localhost 3080"
+        "start:nodemon": "nodemon ./index.js localhost 3080",
+        "check-env": "node -e 'console.log(process.env)' | grep npm"
     },
     "version": "1.0.0",
     "author": "Jake Schroder",
-    "description": "The api for EverythingEverywhere",
+    "description": "The api for Packrat",
     "license": "ISC",
     "repository": {
         "type": "git",

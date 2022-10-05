@@ -3,10 +3,11 @@ import PageFooterContainer from "../containers/PageFooter";
 import PageHeaderContainer from "../containers/PageHeader";
 import ProductGridContainer from "../containers/ProductGrid";
 import InfiniteScroll from 'react-infinite-scroller';
-import CircularProgress from '@mui/material/CircularProgress';
+import { AppBar, CircularProgress } from "@mui/material/";
 
 const HomePage = () => {  
-  const [filterState, setFilterState] = useState("Shop All");
+  const [typeFilterState, setTypeFilterState] = useState("Shop All");
+  const [sortFilterState, setSortFilterState] = useState("Random");
   const [productData, setProductData] = useState([]);
   const [error, setError] = useState(false);
   const [pageIndex, setPageIndex] = useState(0);
@@ -16,12 +17,14 @@ const HomePage = () => {
   const [hasMore, setHasMore] = useState(true);
   const [loaded, setLoaded] = useState(false);
 
+  const port = process.env.REACT_APP_PORT;
+
   const fetchProductData = useCallback(async() =>{
     if(isFetching){return}
     setIsFetching(true);
     try{
       // fetch request for products
-      const response = await fetch(`http://localhost:3080/products/${filterState.replaceAll(' ', '_')}?pageIndex=${pageIndex}&pageSize=${pageSize}`);
+      const response = await fetch(`http://localhost:${port}/products/${typeFilterState.replaceAll(' ', '_')}?sortOrder=${sortFilterState.replaceAll(' ', '_')}&pageIndex=${pageIndex}&pageSize=${pageSize}`);
       const data = await response.json();
       if(data.length === 0){
           setHasMore(false);
@@ -35,38 +38,40 @@ const HomePage = () => {
     }finally{
       setIsFetching(false);
     }
-  }, [pageIndex, productData, isFetching, filterState]);
+  }, [pageIndex, productData, isFetching, typeFilterState, sortFilterState]);
 
-  
+  const fetchFilterData = async () =>{
+    try{
+      const response = await fetch(`http://localhost:${port}/filters/all`);
+      const { filters } = await response.json();
+      for (let index = 0; index < filters.length; index++) {
+        const filter = filters[index];
+        const response = await fetch(`http://localhost:${port}/filters/${filter}`);
+        const data = await response.json();
+        setPageFilters(prevState => ({
+              ...prevState,    // keep all other key-value pairs
+              [filter]: data.filterOptions       // update the value of specific key
+        }))
+      }
+       setLoaded(true);
+    }catch(e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     // use is loaded state
-    const fetchFilterData = async () =>{
-      try{
-        const response = await fetch('http://localhost:3080/filters/all');
-        const { filters } = await response.json();
-        for (let index = 0; index < filters.length; index++) {
-          const filter = filters[index];
-          const response = await fetch(`http://localhost:3080/filters/${filter}`);
-          const data = await response.json();
-          setPageFilters(prevState => ({
-                ...prevState,    // keep all other key-value pairs
-                [filter]: data.filterOptions       // update the value of specific key
-          }))
-        }
-         setLoaded(true);
-      }catch(e) {
-        console.error(e);
-      }
-    };
     fetchFilterData()
   }, [])
   
   if (loaded) {
     return (
       <div className="App">
-        <header className="App-header">
-          <PageHeaderContainer setPageIndex={setPageIndex} setProductData={setProductData} setFilterState={setFilterState} pageFilters={pageFilters}/>
+        <AppBar className="App-header" position="fixed" color="transparent" elevation={0} >
+          <PageHeaderContainer setPageIndex={setPageIndex} setProductData={setProductData} 
+            setTypeFilterState={setTypeFilterState} setSortFilterState={setSortFilterState} pageFilters={pageFilters}/>          
+        </AppBar>
+        <body className="App-body" >
           <InfiniteScroll
               pageStart={0}
               loadMore={fetchProductData}
@@ -76,15 +81,18 @@ const HomePage = () => {
           >
             <ProductGridContainer productData={productData} />
           </InfiniteScroll>
+        </body>
+
+        <footer className="App-footer" style={{ width: "100%", height: "20vh" }}>
           <PageFooterContainer />
-        </header>
+        </footer>
       </div>
     );
   }
   return (
     <div className="App">
       <header className="App-header">
-        <CircularProgress color="secondary" />
+        <CircularProgress className="loader" align="center" color="secondary" />
       </header>
     </div>
   );

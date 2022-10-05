@@ -5,6 +5,9 @@ import json
 import requests
 from time import sleep
 from secrets import token_urlsafe
+from flashtext import KeywordProcessor
+from os import environ
+from dotenv import load_dotenv
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -26,19 +29,64 @@ def get_products_by_page(url, page):
 def get_db(host='localhost', port=27017):
     print("Connecting to database...")
     try:
-        client = MongoClient(host, port)
-        return [client.everything_everywhere, client]
+        load_dotenv('.env.prod')
+        client = MongoClient(environ["DATABASE_URL"])
+        return [client.packrat, client]
     except Exception as e:
         logging.error("failed to connect to database")
         exit()
 
+def process_category(product_type):
+    kp = KeywordProcessor(case_sensitive=False)
+    key = {'T-Shirts': ['t-shirt', 't-shirts', 't shirt', 'crewneck', 'tshirt', 'tee', 'long', 'sleeve', 'longsleeve', 'tees'],
+            'Tops': ['shirt', 'top', 'polo', 'tank', 'jersey', 'crop', 'blouse', 'tops', 'blouses', 'flannel', 'shirts'],
+            'Layers': ['jacket', 'vest', 'cardigan', 'outerwear', 'coat', 'button-up', 'parka', 'button', 'knit', 
+                        'shawl', 'capelet', 'bomber', 'blazer', 'windbreaker', 'zip', 'vests', 'fleece', 'jackets',
+                        'knitwear'],
+            'Pullovers': ['hoodie', 'sweatshirt', 'jumper', 'hoody', 'pullover', 'sweatshirts', 'sweater', 'hoodies',
+                        'sweaters', 'rollneck'],
+            'Shorts': ['shorts', 'short', 'sweatshorts'],
+            'Pants': ['pant', 'bottom', 'sweatpant', 'trouser', 'jean', 'pants', 'bottoms', 'jeans', 'trousers', 'sweatpants'],
+            'Dresses & Skirts': ['skirt', 'dress', 'skirts', 'dresses'],
+            'Swim': ['swim', 'bodysuit'],
+            'Shoes': ['footwear', 'shoe', 'clog', 'sneaker', 'sandal', 'boot', 'sneakers', 'sandals', 'boots',
+                        'shoes'],
+            'Jewelry': ['jewelry', 'necklace', 'ring'],
+            'Accessories': ['socks', 'belt', 'hat', 'accessories', 'eyewear', 'underwear', 'bag', 'headwear', 
+                        'apparel', 'beanie', 'pouch', 'tote', 'scarf', 'cap', 'trucker', 'sunglasses', 'odds'
+                        'gloves', 'scarve', 'snapback', 'balaclavas', 'tie', 'headband', 'boxers', 'headbands',
+                        'neckties', 'handbags', 'bags', 'watches', 'wristband', 'hats', 'beanies', 'belts',
+                        'backpacks', 'mittens', 'scarves', 'wallets', 'wallet', 'case', 'cases', 'accessorie',
+                        'ends'],
 
-def update_products(db, page, products):
+            'Wildcard Clothing': ['tracksuit', 'kimono', 'sport', 'overall', 'coverall', 'jumpsuits', 'rompers', 'robe', 
+                                    'suit', 'clothing', 'suits', 'athletic', 'jumpsuit', 'casual', 'sweat', 'thermal',
+                                    'womens', 'women\'s'],
+            'Goods': ['art', 'music', 'home', 'books', 'furniture', 'bottle', 'desk', 'object', 'mask', 'pin',
+                        'rug', 'incense', 'pillow', 'chair', 'kitchen', 'food', 'ceramic', 'soap', 'perfume',
+                        'gift', 'card', 'sticker', 'digital', 'desk', 'neon', 'service', 'keychain', 'petware'
+                        'towel', 'puzzle', 'cosmetic', 'good', 'tattoo', 'candle', 'blanket', 'insurance', 'mug',
+                        'cup', 'bowl', 'cleaner', 'wellness', 'golf', 'skate', 'dvd', 'video', 'trucks', 'hardware',
+                        'grip', 'dvds', 'videos', 'bearings', 'blankets', 'key', 'rugby', 'towel', 'stickers',
+                        'skateboard', 'wheels', 'masks', 'bottles', 'homeware', 'cosmetics', 'petware', 'tattoos',
+                        'pins', 'cleaners']
+        }
+
+    kp.add_keywords_from_dict(key)
+    keywords_found = kp.extract_keywords(product_type)
+
+    if len(keywords_found) == 0: # No match in key
+        return product_type
+    else: # New product_type
+        return keywords_found[-1]
+
+
+def update_products(url, db, page, products):
     try:
-        operations = [ReplaceOne({'_id': item["id"]}, item, upsert=True)
-                for item in products]
-        operations += [UpdateOne(item, {'$set': {'random_sort': token_urlsafe(32)}}, upsert=True)
-                for item in products]
+        operations = [ReplaceOne({'_id': product["id"]}, product, upsert=True)
+                for product in products]
+        operations += [UpdateOne(product, {'$set': {'random_sort': token_urlsafe(32), 'url': url, 'product_type': process_category(product['product_type'])}}, upsert=True)
+                for product in products]
 
         result = db.products.bulk_write(operations)
         logging.debug(f"{result.inserted_count} results inserted")
@@ -55,7 +103,7 @@ def store_products(url, db):
     products_on_page = get_products_by_page(url, page)
     while len(products_on_page):
         # Store product data
-        update_products(db, page, products_on_page)
+        update_products(url, db, page, products_on_page)
         page += 1
         sleep(15)  # Prevents blocking from shopify
         products_on_page = get_products_by_page(url, page)

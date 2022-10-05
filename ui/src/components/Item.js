@@ -12,10 +12,10 @@ import Grid from "@mui/material/Unstable_Grid2";
 
 export default function MultiActionAreaCard({
   title,
+  handle,
   variants,
   images,
   vendor,
-  tags,
   product_type
 }, index) {
 
@@ -26,7 +26,7 @@ export default function MultiActionAreaCard({
 
   return (
     // You can parameterize the "xs" to have a variable size
-    <Grid key={index} item xs={2}>
+    <Grid key={index} item xs={1} >
       <Card sx={{ maxWidth: 250 }} style={{ boxShadow: "none" }}>
         <CardActionArea>
           <CardMedia component="img" image={product_image} alt="Uh-oh" />

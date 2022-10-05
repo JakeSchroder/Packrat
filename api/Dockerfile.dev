@@ -1,5 +1,5 @@
 # Pull the Node image from Docker Hub
-FROM node:14-slim
+FROM node:16
 
 # Setting Working Directory
 WORKDIR /usr/app
@@ -13,7 +13,11 @@ RUN npm install
 # Copy rest of the code to container
 COPY . .
 
-EXPOSE 3080
+ENV ENVIRONMENT=${ENVIRONMENT}
+ENV PORT=${PORT}
+ENV DATABASE_URL=${DATABASE_URL}
+
+EXPOSE ${PORT}
 
 # Run the API on Nodemon
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start:nodemon"]

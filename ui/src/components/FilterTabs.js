@@ -27,6 +27,7 @@ export default function BasicMenu({setPageIndex, setProductData, setFilterState,
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        variant="contained"
       >
         {title}
       </Button>
