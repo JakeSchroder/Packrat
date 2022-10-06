@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // TODO: Move to own file/automatically scrape and organize //
 const productSchema = new mongoose.Schema({
@@ -18,9 +19,11 @@ const typeFilter = ['Shop_All', 'T-Shirts', 'Tops',
 
 const basePath = '/products';
 const Product = mongoose.model('Product', productSchema, "products");
+router.options('/send', cors());
 
 typeFilter.forEach((type) => {
-    router.get(`${basePath}/${type.toLowerCase()}`, async (request, response) => {// Retrieves Top products
+    router.options('/send', cors());
+    router.get(`${basePath}/${type.toLowerCase()}`, cors(), async (request, response) => {// Retrieves Top products
         const { sortOrder, pageIndex, pageSize } = request.query; 
         let sortQuery = {};
         // TODO: validate query params before injecting them into query to prevent SQL injection
@@ -52,22 +55,22 @@ typeFilter.forEach((type) => {
     });
 })
 
-router.get(`/filters/all`, async (request, response) => {
+router.get(`/filters/all`, cors(), async (request, response) => {
     response.send({filters: ['type', 'vendor', 'sort']});
 })
 
-router.get(`/filters/type`, async (request, response) => {
+router.get(`/filters/type`, cors(), async (request, response) => {
 
     response.send({filterOptions: typeFilter})
 
 })
 
-router.get(`/filters/vendor`, async (request, response) => {
+router.get(`/filters/vendor`, cors(), async (request, response) => {
     const vendorFilter = ['Brain Dead', 'TUNNEL VISION', 'Honor The Gift', 'Fucking Awesome'];
     response.send({filterOptions: vendorFilter})
 })
 
-router.get(`/filters/sort`, async (request, response) => {
+router.get(`/filters/sort`, cors(), async (request, response) => {
     const sortFilter = ['Random', 'Low to High', 'High to Low', 'Old to New', 'New to Old'];
     response.send({filterOptions: sortFilter})
 })
