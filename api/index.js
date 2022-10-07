@@ -21,10 +21,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(products);
 
-app.get('/cors', (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
-  res.send({ "msg": "This has CORS enabled 🎈" })
-})
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 if(process.env.ENVIRONMENT === 'production'){
   app.use(express.static(path.join(__dirname, 'build')));
