@@ -16,7 +16,7 @@ const typeFilter = ['Shop_All', 'T-Shirts', 'Tops',
                     'Shoes', 'Jewelry', 'Accessories', 
                     'Wildcard_Clothing', 'Goods'];
 
-const basePath = '/products';
+const basePath = '/cors/products';
 const Product = mongoose.model('Product', productSchema, "products");
 
 typeFilter.forEach((type) => {
@@ -52,22 +52,22 @@ typeFilter.forEach((type) => {
     });
 })
 
-router.get(`/filters/all`, async (request, response) => {
+router.get(`/cors/filters/all`, async (request, response) => {
     response.send({filters: ['type', 'vendor', 'sort']});
 })
 
-router.get(`/filters/type`, async (request, response) => {
+router.get(`/cors/filters/type`, async (request, response) => {
 
     response.send({filterOptions: typeFilter})
 
 })
 
-router.get(`/filters/vendor`, async (request, response) => {
+router.get(`/cors/filters/vendor`, async (request, response) => {
     const vendorFilter = ['Brain Dead', 'TUNNEL VISION', 'Honor The Gift', 'Fucking Awesome'];
     response.send({filterOptions: vendorFilter})
 })
 
-router.get(`/filters/sort`, async (request, response) => {
+router.get(`/cors/filters/sort`, async (request, response) => {
     const sortFilter = ['Random', 'Low to High', 'High to Low', 'Old to New', 'New to Old'];
     response.send({filterOptions: sortFilter})
 })
