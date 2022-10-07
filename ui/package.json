@@ -50,6 +50,9 @@
     "packrat.shop",
     "www.packrat.shop",
     "http://packrat.shop",
-    "http://www.packrat.shop"
+    "http://www.packrat.shop",
+    "http://localhost/cors/filters/all",
+    "http://packrat.shop/cors/filters/all",
+    "http://www.packrat.shop/cors/filters/all"
   ]
 }
