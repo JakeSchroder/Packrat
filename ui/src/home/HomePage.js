@@ -27,7 +27,7 @@ const HomePage = () => {
     setIsFetching(true);
     try{
       // fetch request for products
-      const response = await fetch(`${base_url}/cors/products/${typeFilterState.replaceAll(' ', '_')}
+      const response = await fetch(`${base_url}/products/${typeFilterState.replaceAll(' ', '_')}
         ?sortOrder=${sortFilterState.replaceAll(' ', '_')}&pageIndex=${pageIndex}&pageSize=${pageSize}`, {mode:'cors'});
       const data = await response.json();
       if(data.length === 0){
@@ -46,11 +46,11 @@ const HomePage = () => {
 
   const fetchFilterData = async () =>{
     try{
-      const response = await fetch(`${base_url}/cors/filters/all`, {mode:'cors'});
+      const response = await fetch(`${base_url}/filters/all`, {mode:'cors'});
       const { filters } = await response.json();
       for (let index = 0; index < filters.length; index++) {
         const filter = filters[index];
-        const response = await fetch(`${base_url}/cors/filters/${filter}`, {mode:'cors'});
+        const response = await fetch(`${base_url}/filters/${filter}`, {mode:'cors'});
         const data = await response.json();
         setPageFilters(prevState => ({
               ...prevState,    // keep all other key-value pairs
