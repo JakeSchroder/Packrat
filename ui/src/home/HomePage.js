@@ -27,6 +27,7 @@ const HomePage = () => {
     setIsFetching(true);
     try{
       // fetch request for products
+      const res = await fetch(`${base_url}/cors`, {mode:'cors'});
       const response = await fetch(`${base_url}/cors/products/${typeFilterState.replaceAll(' ', '_')}?sortOrder=${sortFilterState.replaceAll(' ', '_')}&pageIndex=${pageIndex}&pageSize=${pageSize}`, {mode:'cors'});
       const data = await response.json();
       if(data.length === 0){
