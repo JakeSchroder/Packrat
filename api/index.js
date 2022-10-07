@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const {products} = require('./src/routes');
 const mongoose = require('mongoose');
 const path = require('path');
+const cors = require('cors');
 
 // Connect to MongoDB
 const mongoString = process.env.DATABASE_URL;
@@ -18,11 +19,16 @@ database.once('connected', () => {
 
 const app = express();
 
-// Assign header value for CORS
-app.use((request, response, next) => {
-  response.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+// Address CORS
+app.use(cors({
+  origin: 'http://packrat.shop'
+}));
+
+app.get('/', (req, res) => {
+  res.send('CORS solved')
+})
+
+
 app.use(bodyParser.json());
 app.use(products);
 
