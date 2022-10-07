@@ -20,5 +20,10 @@
         "mongoose": "^6.5.3",
         "nodemon": "^2.0.19",
         "postman": "^0.2.0"
-    }
+    },
+    "proxy": [
+        "localhost:3000",
+        "localhost",
+        "http://localhost"
+      ]
 }
