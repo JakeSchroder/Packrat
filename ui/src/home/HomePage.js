@@ -26,7 +26,6 @@ const HomePage = () => {
     if(isFetching){return}
     setIsFetching(true);
     try{
-      const res= await fetch(`http:localhost:${port}/cors`, { mode: 'cors' });
       // fetch request for products
       const response = await fetch(`${base_url}/products/${typeFilterState.replaceAll(' ', '_')}
         ?sortOrder=${sortFilterState.replaceAll(' ', '_')}&pageIndex=${pageIndex}&pageSize=${pageSize}`, {mode:'cors'});
