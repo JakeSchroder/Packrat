@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const {products} = require('./src/routes');
 const mongoose = require('mongoose');
 const path = require('path');
+const cors = require('cors');
 
 const mongoString = process.env.DATABASE_URL;
 mongoose.connect(mongoString);
