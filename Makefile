@@ -12,6 +12,6 @@ build-dev:
 
 # Production commands
 start-prod:
-	docker compose -f docker-compose-prod.yaml up
+	docker compose -f apprunner.yaml up
 build-prod:
-	docker-compose -f docker-compose-prod.yaml up -d --no-deps --build
+	docker-compose -f apprunner.yaml up -d --no-deps --build
