@@ -20,12 +20,9 @@ database.once('connected', () => {
 const app = express();
 
 // Address CORS
-app.use(cors({
-  origin: 'http://packrat.shop'
-}));
-
-app.get('/', (req, res) => {
-  res.send('CORS solved')
+app.get('/cors', (request, response) => {
+  response.set('Access-Control-Allow-Origin', '*');
+  response.send({ "msg": "This has CORS enabled 🎈" })
 })
 
 
