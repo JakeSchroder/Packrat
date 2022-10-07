@@ -20,10 +20,7 @@ database.once('connected', () => {
 const app = express();
 
 // Address CORS
-app.get('/cors', (request, response) => {
-  response.set('Access-Control-Allow-Origin', '*');
-  response.send({ "msg": "This has CORS enabled 🎈" })
-})
+app.use(cors())
 
 
 app.use(bodyParser.json());
