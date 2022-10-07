@@ -17,14 +17,17 @@ const HomePage = () => {
   const [hasMore, setHasMore] = useState(true);
   const [loaded, setLoaded] = useState(false);
 
-  const port = process.env.REACT_APP_PORT;
-
+  const port = 80;//process.env.REACT_APP_PORT;
+  let base_url = `http://localhost:${port}`;
+  if(process.env.ENVIRONMENT === 'production'){
+    base_url = process.env.BASE_URL;
+  }
   const fetchProductData = useCallback(async() =>{
     if(isFetching){return}
     setIsFetching(true);
     try{
       // fetch request for products
-      const response = await fetch(`http://localhost:${port}/products/${typeFilterState.replaceAll(' ', '_')}?sortOrder=${sortFilterState.replaceAll(' ', '_')}&pageIndex=${pageIndex}&pageSize=${pageSize}`);
+      const response = await fetch(`${base_url}/products/${typeFilterState.replaceAll(' ', '_')}?sortOrder=${sortFilterState.replaceAll(' ', '_')}&pageIndex=${pageIndex}&pageSize=${pageSize}`);
       const data = await response.json();
       if(data.length === 0){
           setHasMore(false);
@@ -42,11 +45,11 @@ const HomePage = () => {
 
   const fetchFilterData = async () =>{
     try{
-      const response = await fetch(`http://localhost:${port}/filters/all`);
+      const response = await fetch(`${base_url}/filters/all`);
       const { filters } = await response.json();
       for (let index = 0; index < filters.length; index++) {
         const filter = filters[index];
-        const response = await fetch(`http://localhost:${port}/filters/${filter}`);
+        const response = await fetch(`${base_url}/filters/${filter}`);
         const data = await response.json();
         setPageFilters(prevState => ({
               ...prevState,    // keep all other key-value pairs

@@ -1,9 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const {products} = require('./src/routes');
 const mongoose = require('mongoose');
-
+const path = require('path');
 
 const mongoString = process.env.DATABASE_URL;
 mongoose.connect(mongoString);
@@ -19,7 +18,14 @@ database.once('connected', () => {
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
 app.use(products);
+
+if(process.env.ENVIRONMENT === 'production'){
+  app.use(express.static(path.join(__dirname, 'build')));
+  app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
+}
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}!`));

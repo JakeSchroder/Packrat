@@ -1,4 +1,3 @@
-
 # Common commands
 down:
 	docker-compose down
