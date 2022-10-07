@@ -45,6 +45,7 @@
   },
   "proxy":[
     "http://localhost:80",
-    "http://localhost"
+    "http://localhost",
+    "http://localhost/filters/all"
   ]
 }
