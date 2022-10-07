@@ -20,7 +20,11 @@ database.once('connected', () => {
 const app = express();
 
 // Address CORS
-app.use(cors())
+corsOptions={
+  "origin": "*",
+  "preflightContinue": true,
+}
+app.use(cors(corsOptions))
 
 
 app.use(bodyParser.json());
