@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const {products} = require('./src/routes');
 const mongoose = require('mongoose');
 const path = require('path');
+const cors = require('cors');
 
 const mongoString = process.env.DATABASE_URL;
 mongoose.connect(mongoString);
@@ -19,6 +20,11 @@ database.once('connected', () => {
 const app = express();
 app.use(bodyParser.json());
 app.use(products);
+
+app.get('/cors', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.send({ "msg": "This has CORS enabled 🎈" })
+})
 
 if(process.env.ENVIRONMENT === 'production'){
   app.use(express.static(path.join(__dirname, 'build')));
