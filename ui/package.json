@@ -46,6 +46,10 @@
   "proxy": [
     "localhost:3000",
     "localhost",
-    "http://localhost"
+    "http://localhost",
+    "packrat.shop",
+    "www.packrat.shop",
+    "http://packrat.shop",
+    "http://www.packrat.shop"
   ]
 }
