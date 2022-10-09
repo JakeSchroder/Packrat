@@ -22,7 +22,6 @@ const HomePage = () => {
   let base_url = 'http://packrat.shop';
 
   // Development and test values
-  console.log(process.env.REACT_APP_ENVIRONMENT == 'development' || process.env.REACT_APP_ENVIRONMENT == 'test');
   if(process.env.REACT_APP_ENVIRONMENT == 'development'){
     port = process.env.REACT_APP_PORT
     base_url = `${process.env.REACT_APP_BASE_URL}${port}`;

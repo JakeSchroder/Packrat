@@ -21,7 +21,7 @@ const app = express();
 
 // Address CORS
 corsOptions={
-  "origin": ["http://packrat.shop", "http://packrat.shop:80", "http://localhost:3000", "http://localhost"],
+  "origin": "*",//["http://packrat.shop", "http://packrat.shop:80", "http://localhost:3000", "http://localhost"],
   "preflightContinue": true,
   "credentials": true
 }
