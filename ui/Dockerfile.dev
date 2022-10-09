@@ -14,9 +14,9 @@ RUN npm install
 COPY . .
 
 # Pass down port from env
-ARG PORT
-ENV REACT_APP_PORT=${PORT}
-
+ENV PORT=${PORT}
+ENV ENVIRONMENT=${ENVIRONMENT}
+ENV BASE_URL=${BASE_URL}
 
 EXPOSE 3000
 

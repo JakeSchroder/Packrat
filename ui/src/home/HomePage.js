@@ -17,11 +17,17 @@ const HomePage = () => {
   const [hasMore, setHasMore] = useState(true);
   const [loaded, setLoaded] = useState(false);
 
-  const port = 80;//process.env.REACT_APP_PORT;
-  let base_url = `http://localhost:${port}`;
-  if(process.env.ENVIRONMENT === 'production'){
-    base_url = process.env.BASE_URL;
+  // Production values
+  let port = 80;
+  let base_url = 'http://packrat.shop';
+
+  // Development and test values
+  console.log(process.env.REACT_APP_ENVIRONMENT == 'development' || process.env.REACT_APP_ENVIRONMENT == 'test');
+  if(process.env.REACT_APP_ENVIRONMENT == 'development'){
+    port = process.env.REACT_APP_PORT
+    base_url = `${process.env.REACT_APP_BASE_URL}${port}`;
   }
+
   const fetchProductData = useCallback(async() =>{
     if(isFetching){return}
     setIsFetching(true);

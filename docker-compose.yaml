@@ -5,9 +5,11 @@ services:
       context: ./ui
       dockerfile: Dockerfile.dev
     env_file:
-      - .env.dev
+      - .env.development
     environment:
       - PORT
+      - ENVIRONMENT
+      - BASE_URL
     ports:
       -  3000:3000
     container_name: mern-ui
@@ -26,7 +28,7 @@ services:
       context: ./api
       dockerfile: Dockerfile.dev
     env_file:
-      - .env.dev
+      - .env.development
     ports:
       - 3080:3080
     container_name: mern-api

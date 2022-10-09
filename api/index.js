@@ -21,16 +21,15 @@ const app = express();
 
 // Address CORS
 corsOptions={
-  "origin": ["http://packrat.shop", "http://packrat.shop:80"],
-  "methods": ['GET'],
-  "preflightContinue": true
+  "origin": ["http://packrat.shop", "http://packrat.shop:80", "http://localhost:3000", "http://localhost"],
+  "preflightContinue": true,
+  "credentials": true
 }
 app.use(cors(corsOptions))
 
 
 app.use(bodyParser.json());
 app.use(products);
-
 
 // Serve UI to the client
 if(process.env.ENVIRONMENT === 'production'){
