@@ -21,8 +21,9 @@ const app = express();
 
 // Address CORS
 corsOptions={
-  "origin": "*",
-  "preflightContinue": true,
+  "origin": ["http://packrat.shop", "http://packrat.shop:80"],
+  "methods": ['GET'],
+  "preflightContinue": true
 }
 app.use(cors(corsOptions))
 
