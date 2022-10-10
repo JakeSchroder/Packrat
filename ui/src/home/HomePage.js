@@ -17,17 +17,22 @@ const HomePage = () => {
   const [hasMore, setHasMore] = useState(true);
   const [loaded, setLoaded] = useState(false);
 
-  const port = 80;//process.env.REACT_APP_PORT;
-  let base_url = `http://localhost:${port}`;
-  if(process.env.ENVIRONMENT === 'production'){
-    base_url = process.env.BASE_URL;
+  // Production values
+  let port = 80;
+  let base_url = 'http://packrat.shop';
+
+  // Development and test values
+  if(process.env.REACT_APP_ENVIRONMENT == 'development'){
+    port = process.env.REACT_APP_PORT
+    base_url = `${process.env.REACT_APP_BASE_URL}${port}`;
   }
+
   const fetchProductData = useCallback(async() =>{
     if(isFetching){return}
     setIsFetching(true);
     try{
       // fetch request for products
-      const response = await fetch(`${base_url}/products/${typeFilterState.replaceAll(' ', '_')}?sortOrder=${sortFilterState.replaceAll(' ', '_')}&pageIndex=${pageIndex}&pageSize=${pageSize}`);
+      const response = await fetch(`${base_url}/products/${typeFilterState.replaceAll(' ', '_')}?sortOrder=${sortFilterState.replaceAll(' ', '_')}&pageIndex=${pageIndex}&pageSize=${pageSize}`, {mode:'cors'});
       const data = await response.json();
       if(data.length === 0){
           setHasMore(false);
@@ -45,11 +50,11 @@ const HomePage = () => {
 
   const fetchFilterData = async () =>{
     try{
-      const response = await fetch(`${base_url}/filters/all`);
+      const response = await fetch(`${base_url}/filters/all`, {mode:'cors'});
       const { filters } = await response.json();
       for (let index = 0; index < filters.length; index++) {
         const filter = filters[index];
-        const response = await fetch(`${base_url}/filters/${filter}`);
+        const response = await fetch(`${base_url}/filters/${filter}`, {mode:'cors'});
         const data = await response.json();
         setPageFilters(prevState => ({
               ...prevState,    // keep all other key-value pairs

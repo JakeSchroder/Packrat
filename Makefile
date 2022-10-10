@@ -1,8 +1,6 @@
 # Common commands
 down:
 	docker-compose down
-stop:
-	docker-compose stop
 
 # Development commands
 start-dev:
@@ -14,4 +12,4 @@ build-dev:
 start-prod:
 	docker compose -f apprunner.yaml up
 build-prod:
-	docker-compose -f apprunner.yaml up -d --no-deps --build
+	cd ui && npm run build:prod && cd ../ && docker-compose -f apprunner.yaml up -d --no-deps --build
