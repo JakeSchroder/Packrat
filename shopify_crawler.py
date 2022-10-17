@@ -117,7 +117,8 @@ def main():
             'https://pleasuresnow.com', 'https://tombolocompany.com', 'https://www.storymfg.com', # 14, 15, 16
             'https://chnge.com', 'https://bdgastore.com', 'https://nepenthesny.com', # 17, 18, 19
             'https://humblesbrand.com', 'https://cherryla.com', 'https://faworldentertainment.com', # 20, 21, 22
-            'https://kidsuper.com', 'https://www.thevintagetwin.com', 'https://wishmeluckbrand.com'] # 23, 24, 25
+            'https://kidsuper.com', 'https://www.thevintagetwin.com', 'https://wishmeluckbrand.com', # 23, 24, 25
+            'https://www.boypotions.com', 'https://itemlabel.com']
     db, client = get_db()
 
     for url in urls:

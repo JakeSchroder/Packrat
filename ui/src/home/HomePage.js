@@ -74,7 +74,7 @@ const HomePage = () => {
   
   if (loaded) {
     return (
-      <div className="App">
+      <div className="App" >
         <AppBar className="App-header" position="fixed" color="transparent" elevation={0} >
           <PageHeaderContainer setPageIndex={setPageIndex} setProductData={setProductData} 
             setTypeFilterState={setTypeFilterState} setSortFilterState={setSortFilterState} pageFilters={pageFilters}/>          

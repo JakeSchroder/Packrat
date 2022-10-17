@@ -8,7 +8,9 @@ const productSchema = new mongoose.Schema({
     variants: Array,
     images: Array,
     product_type: String,
-    tags: Array
+    tags: Array,
+    random_sort: String,
+    url: String
 });
 const typeFilter = ['Shop_All', 'T-Shirts', 'Tops', 
                     'Layers', 'Pullovers', 'Shorts', 
@@ -46,7 +48,7 @@ typeFilter.forEach((type) => {
         }else{
             sortQuery = {random_sort:1};
         }
-        const options = 'title variants images vendor tags product_type';
+        const options = 'title handle variants images vendor tags product_type url';
         const result = await Product.find(filter, options).sort(sortQuery).collation({locale: "en_US", numericOrdering: true}).skip(pageIndex*pageSize).limit(pageSize).exec();
         response.send(result);
     });

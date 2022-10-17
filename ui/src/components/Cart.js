@@ -1,6 +1,20 @@
 import * as React from "react";
 import { Button, IconButton } from "@mui/material";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette:{
+    primary:{
+      main: '#E3E2CB',
+      contrastText: '#000000',
+    },
+    secondary:{
+       main: '#2A6364',
+       contrastText: '#E3E2CB'
+    }
+  }
+});
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -14,15 +28,21 @@ export default function BasicMenu() {
 
   return (
     <div>
-      <IconButton
-        id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
-        <ShoppingBagIcon />
-      </IconButton>
+      <ThemeProvider theme={theme}>
+        <Button
+          id="basic-menu"
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+          variant="contained"
+          size="small"
+          disableElevation={true}
+          startIcon={<ShoppingCartIcon/>}
+        >
+          Cart
+        </Button>
+      </ThemeProvider>
     </div>
   );
 }

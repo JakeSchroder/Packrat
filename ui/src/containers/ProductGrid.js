@@ -12,6 +12,7 @@ export default function BasicGrid({ productData }) {
       container
       alignItems="baseline"
       padding="5%"
+      justifyContent="space-evenly"
       paddingBottom={0}
     >
       {productData.map((product, index) => ItemComponent({ ...product }, index))}
